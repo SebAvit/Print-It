@@ -7,7 +7,7 @@ Ce projet consiste en un carrousel d'images interactif pour afficher des diaposi
 - Affichage d'images avec des descriptions associées.
 - Navigation facile entre les diapositives via des flèches de gauche et de droite.
 - Sélection de diapositives spécifiques à l'aide de points de navigation (dots).
-- Adaptabilité aux différentes tailles d'écrans pour une expérience utilisateur optimale.
+
 
 ## Structure du Projet
 
