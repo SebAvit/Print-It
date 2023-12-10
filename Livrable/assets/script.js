@@ -15,41 +15,67 @@ const slides = [
 		"image":"slide4.png",
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
-]
+];
 
-var slideCount = $('#banner-img').length;
-	var slideWidth = $('#banner-img').width();
-	var slideHeight = $('#banner-img').height();
-	var sliderUlWidth = slideCount * slideWidth;
-	
-	$('#banner-img').css({ width: slideWidth, height: slideHeight });
-	
-	$('#banner-img').css({ width: sliderUlWidth, marginLeft: - slideWidth });
-	
-    $('#banner-img').prependTo('#banner-img');
+let imageSlider = document.getElementById("slider")
+let descriptionSlider = document.getElementById("descriptionSlider")
+let flecheDeGauche = document.getElementById("g")
+let flecheDeDroite = document.getElementById("d")
+let dotsContainer = document.querySelector("body ol");
 
-    function moveLeft() {
-        function ( {
-            $('#slider ul li:last-child').prependTo('#slider ul');
-            $('#slider ul').css('left', '');
-        });
-    };
+let i = 0
 
-    function moveRight() {
- 		function ( {
-            $('#slider ul li:first-child').appendTo('#slider ul');
-            $('#slider ul').css('left', '');
-        });
-    };
+function updateSlide(i) {
+	// Mettre a jour le contenu
+    imageSlider.setAttribute("src", "./assets/images/slideshow/" + slides[i].image);
+    descriptionSlider.innerHTML = slides[i].tagLine;
 
-    $('a.control_prev').click(function () {
-        moveLeft();
+    // Mettre à jour la classe des dots
+    const dots = dotsContainer.querySelectorAll(".dot");
+    dots.forEach((dot, dotIndex) => {
+        if (dotIndex === i) {
+            dot.classList.add("dot_selected");
+        } else {
+            dot.classList.remove("dot_selected");
+        }
     });
+}
 
-    $('a.control_next').click(function () {
-        moveRight();
-    });
+// Ecouteur d'action au clic sur les boutons droite et gauche
+	flecheDeGauche.addEventListener("click", function() {
+		i = (i - 1 + slides.length) % slides.length
+		imageSlider.setAttribute("src","./assets/images/slideshow/" + slides[i].image)
+		descriptionSlider.innerHTML = slides[i].tagLine
+		updateSlide(i);
+	})
 
-});
+
+	flecheDeDroite.addEventListener("click", function() {
+		i = (i + 1) % slides.length
+		imageSlider.setAttribute("src","./assets/images/slideshow/" + slides[i].image)
+		descriptionSlider.innerHTML = slides[i].tagLine
+		updateSlide(i);
+	});
+
+// Ajout des éléments "Dot" dans la div dédiée
+	slides.forEach((element, i) => {
+		let dot = document.createElement("li");
+		dot.classList.add("dot");
+		dot.setAttribute("data-index", i);
+		dotsContainer.appendChild(dot);
+	
+		// Ajouter un écouteur d'événements aux dots pour changer la diapositive au clic
+		dot.addEventListener("click", function () {
+			updateSlide(i);
+		});
+	});
+	
+
+updateSlide(i);
+
+
+
+
+
 
 	
